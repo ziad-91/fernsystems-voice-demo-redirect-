@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Extract Full Hostname
     let hostnameToMatch = window.location.hostname;
-    
+
     // If localhost, allow URL param for easy testing, fallback to a dummy domain
     if (hostnameToMatch === "localhost" || hostnameToMatch === "127.0.0.1") {
         const urlParams = new URLSearchParams(window.location.search);
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Fetch Token from Backend
     // IMPORTANT: Change this to your deployed backend URL in production
-    const backendUrl = "http://localhost:8000";
+    const backendUrl = "https://voice-token-api-678003405884.us-east4.run.app";
 
     async function fetchToken() {
         try {
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const data = await response.json();
-            
+
             // Initialize Vapi with the securely vended Public Key from the backend.
             // This ensures NO API keys are hardcoded in the frontend source code.
             vapi = new Vapi(data.vapi_public_key);
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Update UI with Airtable data
             greeting.textContent = `Welcome, ${data.firstName}!`;
             subtitle.textContent = `We've prepared an agent focused on your role as ${data.jobTitle}.`;
-            
+
             // Update header logo text
             const headerLogo = document.getElementById('header-company-name');
             if (headerLogo) {
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             };
-            
+
             showState(readyState);
 
         } catch (error) {
