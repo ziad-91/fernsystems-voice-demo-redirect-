@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Setup Vapi Event Listeners inside fetchToken so they attach to the newly created instance
             vapi.on('call-start', () => {
                 console.log("Call started");
+                subtitle.textContent = "Agent is listening...";
+                // Reset start button text for next time
+                document.getElementById('start-btn').textContent = "Start Interactive Demo";
                 showState(activeState);
             });
 
@@ -62,10 +65,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log("Call ended");
                 showState(readyState);
                 subtitle.textContent = "Call ended. You can start again when ready.";
+                
+                // Add LinkedIn button if it doesn't already exist
+                if (!document.getElementById('linkedin-btn')) {
+                    const linkedinBtn = document.createElement('a');
+                    linkedinBtn.id = 'linkedin-btn';
+                    linkedinBtn.href = 'https://www.linkedin.com/in/ziadelmarsafawy/';
+                    linkedinBtn.target = '_blank';
+                    linkedinBtn.rel = 'noopener noreferrer';
+                    linkedinBtn.className = 'secondary-btn'; 
+                    linkedinBtn.style.display = 'block';
+                    linkedinBtn.style.marginTop = '15px';
+                    linkedinBtn.style.textDecoration = 'none';
+                    linkedinBtn.textContent = 'Any questions or suggestions?';
+                    readyState.appendChild(linkedinBtn);
+                }
             });
 
             vapi.on('error', (e) => {
                 console.error("Vapi Error:", e);
+                document.getElementById('start-btn').textContent = "Start Interactive Demo";
                 showError("Call error occurred. Please refresh the page.");
             });
 
@@ -113,10 +132,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         try {
+            // Show loading animation in the button
+            startBtn.innerHTML = '<div class="btn-loading-dots"><span></span><span></span><span></span></div>';
+            
             // Start the Vapi call using the assistant ID and pass the dynamic Airtable variables
             vapi.start(window.vapiConfig.assistantId, window.vapiConfig.overrides);
         } catch (error) {
             console.error("Failed to start Vapi:", error);
+            startBtn.textContent = "Start Interactive Demo";
             showError("Failed to start the call.");
         }
     });
