@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
             vapi = new Vapi(data.vapi_public_key);
 
             // Update UI with Airtable data
-            greeting.textContent = `Welcome, ${data.firstName}!`;
+            greeting.textContent = `Hey, ${data.firstName}!`;
             subtitle.textContent = `Just pretend you're a ${data.jobTitle} going through a pre-screen call.`;
 
             // Update header logo text
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log("Call ended");
                 showState(readyState);
                 subtitle.textContent = "Call ended. You can start again when ready.";
-                
+
                 // Add LinkedIn button if it doesn't already exist
                 if (!document.getElementById('linkedin-btn')) {
                     const linkedinBtn = document.createElement('a');
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     linkedinBtn.href = 'https://www.linkedin.com/in/ziadelmarsafawy/';
                     linkedinBtn.target = '_blank';
                     linkedinBtn.rel = 'noopener noreferrer';
-                    linkedinBtn.className = 'secondary-btn'; 
+                    linkedinBtn.className = 'secondary-btn';
                     linkedinBtn.style.display = 'block';
                     linkedinBtn.style.marginTop = '15px';
                     linkedinBtn.style.textDecoration = 'none';
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             // Show loading animation in the button
             startBtn.innerHTML = '<div class="btn-loading-dots"><span></span><span></span><span></span></div>';
-            
+
             // Start the Vapi call using the assistant ID and pass the dynamic Airtable variables
             vapi.start(window.vapiConfig.assistantId, window.vapiConfig.overrides);
         } catch (error) {
