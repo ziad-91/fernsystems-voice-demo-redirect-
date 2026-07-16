@@ -56,10 +56,12 @@ def generate_token(company: str = Query(..., description="The company name to lo
                 "Authorization": f"Zoho-oauthtoken {access_token}"
             }
             # Search candidate by email
-            search_url = "https://www.zohoapis.com/recruit/v2/Candidates/search?criteria=(Email:equals:[DUMMY_EMAIL])"
+            search_url = "https://recruit.zoho.com/recruit/v2/Candidates/search?criteria=(Email:equals:[DUMMY_EMAIL])"
             response = requests.get(search_url, headers=headers)
             
-            if response.status_code != 200:
+            if response.status_code == 204:
+                raise HTTPException(status_code=404, detail="Candidate not found in Zoho (204 No Content).")
+            elif response.status_code != 200:
                 raise HTTPException(status_code=response.status_code, detail=f"Zoho API error: {response.text}")
                 
             data = response.json()
@@ -166,7 +168,7 @@ def update_zoho(payload: dict = Body(...)):
             "Authorization": f"Zoho-oauthtoken {access_token}",
             "Content-Type": "application/json"
         }
-        update_url = f"https://www.zohoapis.com/recruit/v2/Candidates/{candidate_id}"
+        update_url = f"https://recruit.zoho.com/recruit/v2/Candidates/{candidate_id}"
         update_payload = {
             "data": [
                 {
