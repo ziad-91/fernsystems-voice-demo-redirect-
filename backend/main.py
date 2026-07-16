@@ -15,9 +15,9 @@ AIRTABLE_TABLE_NAME = os.getenv("AIRTABLE_TABLE_NAME")
 VAPI_PUBLIC_KEY = os.getenv("VAPI_PUBLIC_KEY")
 VAPI_ASSISTANT_ID = os.getenv("VAPI_ASSISTANT_ID")
 
-ZOHO_CLIENT_ID = os.getenv("ZOHO_CLIENT_ID")
-ZOHO_CLIENT_SECRET = os.getenv("ZOHO_CLIENT_SECRET")
-ZOHO_REFRESH_TOKEN = os.getenv("ZOHO_REFRESH_TOKEN")
+ZOHO_CLIENT_ID = os.getenv("ZOHO_CLIENT_ID", "").strip().strip('"').strip("'")
+ZOHO_CLIENT_SECRET = os.getenv("ZOHO_CLIENT_SECRET", "").strip().strip('"').strip("'")
+ZOHO_REFRESH_TOKEN = os.getenv("ZOHO_REFRESH_TOKEN", "").strip().strip('"').strip("'")
 
 def get_zoho_access_token():
     url = "https://accounts.zoho.com/oauth/v2/token"
