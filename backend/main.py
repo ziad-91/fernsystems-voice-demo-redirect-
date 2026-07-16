@@ -29,7 +29,11 @@ def get_zoho_access_token():
     }
     response = requests.post(url, data=payload)
     if response.status_code == 200:
-        return response.json().get("access_token")
+        data = response.json()
+        if "access_token" in data:
+            return data["access_token"]
+        else:
+            raise HTTPException(status_code=500, detail=f"Zoho token refresh succeeded (200 OK) but returned an error payload: {data}")
     else:
         raise HTTPException(status_code=500, detail=f"Failed to refresh Zoho token: {response.text}")
 
