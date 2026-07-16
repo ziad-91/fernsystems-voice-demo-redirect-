@@ -33,7 +33,13 @@ def get_zoho_access_token():
         if "access_token" in data:
             return data["access_token"]
         else:
-            raise HTTPException(status_code=500, detail=f"Zoho token refresh succeeded (200 OK) but returned an error payload: {data}")
+            debug_info = {
+                "id_start": ZOHO_CLIENT_ID[:5] if ZOHO_CLIENT_ID else None,
+                "id_len": len(ZOHO_CLIENT_ID) if ZOHO_CLIENT_ID else 0,
+                "secret_start": ZOHO_CLIENT_SECRET[:3] if ZOHO_CLIENT_SECRET else None,
+                "secret_len": len(ZOHO_CLIENT_SECRET) if ZOHO_CLIENT_SECRET else 0
+            }
+            raise HTTPException(status_code=500, detail=f"Zoho token refresh succeeded (200 OK) but returned an error payload: {data}. DEBUG: {debug_info}")
     else:
         raise HTTPException(status_code=500, detail=f"Failed to refresh Zoho token: {response.text}")
 
