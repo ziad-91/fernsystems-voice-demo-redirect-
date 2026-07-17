@@ -1,4 +1,8 @@
 import Vapi from 'https://esm.sh/@vapi-ai/web@2.5.2';
+import { inject } from 'https://esm.sh/@vercel/analytics';
+
+// Initialize Vercel Analytics
+inject();
 
 document.addEventListener('DOMContentLoaded', () => {
     // UI Elements
